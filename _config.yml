@@ -79,7 +79,7 @@ img_cdn:
 avatar: /pic/prof.jpeg
 
 # boolean type, the global switch for TOC in posts.
-toc: true
+toc: false
 
 comments:
   active: # The global switch for posts comments, e.g., 'disqus'.  Keep it empty means disable
