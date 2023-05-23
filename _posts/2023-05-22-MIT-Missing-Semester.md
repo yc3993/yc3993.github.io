@@ -81,3 +81,7 @@ zsh: permission denied: ./semester
 ./semester | grep -i last-modified | cut -d' ' -f2- > last-modified.txt
 ```
 
+
+## Lecture 2
+#### Shell Scripting Handout
+
