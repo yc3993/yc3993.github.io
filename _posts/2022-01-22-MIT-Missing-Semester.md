@@ -83,5 +83,60 @@ zsh: permission denied: ./semester
 
 
 ## Lecture 2
-#### Shell Scripting Handout
+#### Shell Scripting Handout 
+Shell Scripting Type:  
+1. 获取和自定义参数  
+  - $0 脚本名
+  - $1 - 9 参数名  
+  && 和 || 
 
+    ```bash
+    false || echo "Oops, fail"
+    # Oops, fail
+
+    true || echo "Will not be printed"
+    #
+
+    true && echo "Things went well"
+    # Things went well
+
+    false && echo "Will not be printed"
+    #
+    ```
+
+2. 使用命令结果作为参数  
+  - 先执行date再执行echo: `echo "Starting program at $(date)"`  
+  - 将foo和bar中数据输出到一个临时文件中再比较区别: `diff <(ls foo) <(ls bar)`  
+    这段脚本会遍历我们提供的参数，使用grep 搜索字符串 foobar，如果没有找到，则将其作为注释追加到文件中。
+
+    ```bash
+    #!/bin/bash
+
+    echo "Starting program at $(date)" # date会被替换成日期和时间
+
+    echo "Running program $0 with $# arguments with pid $$"
+
+    for file in "$@"; do
+        grep foobar "$file" > /dev/null 2> /dev/null
+        # 如果模式没有找到，则grep退出状态为 1
+        # 我们将标准输出流和标准错误流重定向到Null，因为我们并不关心这些信息
+        if [[ $? -ne 0 ]]; then
+            echo "File $file does not have any foobar, adding one"
+            echo "# foobar" >> "$file"
+        fi
+    done
+    ```
+
+3. 通配符  
+  ?和*匹配多种字符：  
+  ```cp /path/to/project/{foo,bar,baz}.sh /newpath```   
+  ```mv *{.py,.sh} folder```
+
+4. Python编写脚本  
+  #!/usr/local/bin/python
+    ```bash
+    #!/usr/local/bin/python
+    import sys
+    for arg in reversed(sys.argv[1:]):
+        print(arg)
+    ```
