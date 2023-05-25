@@ -1,8 +1,8 @@
 ---
-title: MIT-Missing-Semester
+title: MIT Missing Semester
 categories: [Tech, General]
 tags: [General]
-render_with_liquid: false
+render_with_liquid: true
 ---
 
 ## Lecture 1
@@ -140,3 +140,17 @@ Shell Scripting Type:
     for arg in reversed(sys.argv[1:]):
         print(arg)
     ```
+
+#### Shell Tools  
+1. 查找文件 find  
+  ```bash
+  # 查找所有名称为src的文件夹
+  find . -name src -type d // type: dir
+  # 查找所有文件夹路径中包含test的python文件
+  find . -path '*/test/*.py' -type f
+  # 查找前一天修改的所有文件
+  find . -mtime -1
+  # 查找所有大小在500k至10M的tar.gz文件
+  find . -size +500k -size -10M -name '*.tar.gz'
+  ```
+  
