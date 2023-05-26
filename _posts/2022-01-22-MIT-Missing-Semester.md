@@ -142,7 +142,7 @@ Shell Scripting Type:
     ```
 
 #### Shell Tools  
-1. 查找文件 find  
+1. 查找文件 find, fd   
   ```bash
   # 查找所有名称为src的文件夹
   find . -name src -type d // type: dir
@@ -153,4 +153,15 @@ Shell Scripting Type:
   # 查找所有大小在500k至10M的tar.gz文件
   find . -size +500k -size -10M -name '*.tar.gz'
   ```
+
+  finding and executing pipelines
+  ```bash
+  # Delete all files with .tmp extension
+  find . -name '*.tmp' -exec rm {} \;
+  # Find all PNG files and convert them to JPG
+  find . -name '*.png' -exec convert {} {}.jpg \;
+  ```
+
+2. 查找字段 grep  
+
   
