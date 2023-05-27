@@ -152,8 +152,7 @@ Shell Scripting Type:
   find . -mtime -1
   # 查找所有大小在500k至10M的tar.gz文件
   find . -size +500k -size -10M -name '*.tar.gz'
-  ```
-
+  ```  
   finding and executing pipelines
   ```bash
   # Delete all files with .tmp extension
