@@ -1,7 +1,7 @@
 ---
 title: MIT Missing Semester
-categories: [Tech, General]
-tags: [General]
+categories: [Tech, MIT]
+tags: [Courses]
 render_with_liquid: true
 panel_includes:
   - toc
