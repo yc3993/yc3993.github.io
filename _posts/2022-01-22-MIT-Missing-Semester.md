@@ -227,5 +227,22 @@ If you’re on macOS, note that the default BSD find is different from the one i
     > ```find . -type f -print0 | xargs -0 stat -f "%m %N" | sort -rn | head -1 | cut -d' ' -f2-```
 
 
+## Lecture 3
+#### Editors Handout
+
+1. Different Modes
+  - Normal
+  - Insert
+  - Replace
+  - Visual
+  - Command-line
+
+2. Basic Operations
+ - Insert: "i"
+ - tabs and wins: 每次以窗口形式展示部分文档
+ - Command-line:  ```:q```    ```:w``` (save)    ```:wq``` (save and quit)  
+
+
+
 
   
