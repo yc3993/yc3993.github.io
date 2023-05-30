@@ -240,7 +240,50 @@ If you’re on macOS, note that the default BSD find is different from the one i
 2. Basic Operations
  - Insert: "i"
  - tabs and wins: 每次以窗口形式展示部分文档
- - Command-line:  ```:q```    ```:w``` (save)    ```:wq``` (save and quit)  
+ 
+3. Command-line:  
+  - ```:q```    ```:w``` (save)    ```:wq``` (save and quit)  
+  - ```:sp```: different taps  
+
+4. Demo  
+
+    ```python
+    def fizz_buzz(limit):
+        for i in range(limit):
+            if i % 3 == 0:
+                print('fizz')
+            if i % 5 == 0:
+                print('fizz')
+            if i % 3 and i % 5:
+                print(i)
+
+    def main():
+        fizz_buzz(10)
+    ```
+    目标修改：
+    1. 主函数调用： 
+       - ^G: go to bottom
+       - o: open a new line
+       - i: insert mode  
+    2. for循环从1开始:
+       - /range: 查找range
+       - w w: move 2 words
+       - i
+       - q
+       - e: go to end of the word
+       - a: append
+    3. 余5输出buzz
+       - /fizz
+       - n: next match
+       - ci': change inside the quote
+    4. 增加换行符
+       - jjj: 往下三行
+       - $: 本行最后一个字符
+       - jj
+       - .: 重复上一个操作
+
+
+
 
 
 
