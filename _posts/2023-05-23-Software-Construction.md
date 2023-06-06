@@ -80,3 +80,126 @@ render_with_liquid: true
 
 
 ## Basic Java
+
+## Testing  
+#### Why
+- 检查代码，保证正确性
+- 很多时候会觉得测试环节没有必要，因为自己写的测试用例反正也会在代码中实现。其实更重要的原因是为CI或者其他人在之后修改代码的时候做出校验
+
+#### Test-first programming   
+规范的代码编写流程:  
+**write the spec and the tests before you even write any code**
+1. Spec: Write a specification for the function
+2. Test: Write tests that exercise the specification
+3. Implement: Write the implementation
+
+> 先确定代码功能与测试用例再实现功能  
+{: .prompt-info }
+
+#### How  
+如何使测试用例显得不多余，不与代码重复除了Test-first先完成测试用例再写代码以外还需要一定的思想。  
+针对于输入参数，根据功能将参数分成不同的subdomains，对于每种subdomains编写测试用例。  
+
+1. abs:  
+```java
+/**
+ * ...
+ * @param a  the argument whose absolute value is to be determined
+ * @return the absolute value of the argument.
+ */
+public static int abs(int a)
+```
+Partitions 
+: a >= 0; a < 0
+
+2. max:
+Partitions
+: a < b; a > b; a = b
+
+    > 根据代码功能划分  
+    {: .prompt-info }
+
+3. multiply : BigInteger × BigInteger → BigInteger  
+- a and b are both positive
+- a and b are both negative
+- a is positive, b is negative
+- a is negative, b is positive
+ - a or b is 0, because the result is always 0
+ - a or b is 1, the identity value for multiplication
+
+    > 划分应额外注意边界条件 
+    {: .prompt-info }  
+
+    对于每一个a和b，应分成 6 * 6 = 36 种分区，形成36个测试用例
+    ![](../../pic/multiply-partition.png)
+
+    若出现过多测试用例，可将a，b分别划分分区，变成 6 + 6， 再增加考虑两者关系的测试用例
+    ```java
+    // partition on a:
+    //   a = 0
+    //   a = 1
+    //   a is small integer > 1
+    //   a is small integer < 0
+    //   a is large positive integer
+    //   a is large negative integer
+    //      (where "small" fits in long, and "large" doesn't)
+    // partition on b:
+    //   b = 0
+    //   b = 1
+    //   b is small integer > 1
+    //   b is small integer < 0
+    //   b is large positive integer
+    //   b is large negative integer
+
+    // partition on signs of a and b:
+    //    a and b are both positive
+    //    a and b are both negative
+    //    a positive and b negative
+    //    a negative and b positive
+    //    one or both are 0
+    ```
+
+#### 编写规范  
+```java
+public class JavaGeneralTest {
+    /**
+     * Testing strategy
+     * <p>
+     * partition:
+     *   a < b
+     *   a > b
+     *   a = b
+     */
+
+    // covers a < b
+    @Test
+    public void testALessThanB() {
+        assertEquals(2, Math.max(1, 2));
+    }
+}
+```
+> stategy + partition + covers for every test case
+{: .prompt-tip } 
+
+#### Unit and integration testing
+Using @Mock to isolate different dependencies
+
+#### Automated regression testing
+Automated
+: 之前提到的测试用例最大的帮助不是立即对于你写的代码做出维护和保证，而是在CI或者之后的修改中做出核验
+
+Regression
+: 修复错误后，把错误样例输入自动化测试中。因为该错误可能很容易再犯
+
+#### Summary
+1. Test-first programming
+: 最重要的思想！！！
+2. Unit-testing each module
+: Mock掉所有的dependency，包括但不限于curl, other funcs, api, database, etc
+3. Partitioning
+: unit and multi-partition
+
+
+
+
+
