@@ -84,7 +84,7 @@ render_with_liquid: true
 ## Testing  
 #### Why
 - 检查代码，保证正确性
-- 很多时候会觉得测试环节没有必要，因为自己写的测试用例反正也会在代码中实现。其实更重要的原因是为CI或者其他人在之后修改代码的时候做出校验
+- 很多时候会觉得测试环节没有必要，因为自己写的测试用例反正也会在代码中实现。其实更重要的原因是为CI或者其他人在之后修改代码的时候做出校验。在实习期间出现过类似情况，由于没办法完全理解之前同事的工作内容，导致业务逻辑改变的时候无法肯定能否修改其中一些变量而出现错误。如果能够在测试用例中显示相关逻辑，保证所有的method和class都能有相对应的测试用例为期上线作保证，那可以节约时间也能确保安全。
 
 #### Test-first programming   
 规范的代码编写流程:  
@@ -197,7 +197,49 @@ Regression
 2. Unit-testing each module
 : Mock掉所有的dependency，包括但不限于curl, other funcs, api, database, etc
 3. Partitioning
-: unit and multi-partition
+: Unit and multi-partition
+4. Coding standard
+: Stategy + partition + covers for every test case
+
+## Code Review, Coding style  
+#### Don’t repeat yourself (DRY)  
+复制代码是十分危险的，安全性和可读性都会大大降低，对于需要复用的方法可以通过接口封装成各类器使用，也可直接在本类中将复杂逻辑分成不同的方法，绝对避免重复使用类似逻辑代码。
+
+#### Comments Standard  
+- 每一个method和class上方都应通过 ```/** + return ``` 添加comment
+- 所有引用也应增加详细说明
+- 对于单行晦涩代码也应添加comment，加在右侧和上方均可
+
+#### Avoid magic numbers
+- 不应出现除了0，1以外的直接数字
+- 复用数字应用static final修饰
+
+#### Name of variables
+- 一个变量只应有一个用途
+- 每一个变量名称十分重要，不应使用temp，data这种没有意义的变量名称
+
+#### Don’t use global variables
+```public static String longestWord;```
+: 不应使用static变量，**global variable**十分不安全并且浪费维护资源
+
+#### Avoid special-case code
+有些时候使用if-else能够提高时间复杂度，但是会影响可读性与安全性，除非能在指数级别上提高时间复杂度，否则不建议使用
+
+#### Summary
+1. DRY
+2. Comments where needed
+3. Fail fast
+4. Avoid magic numbers
+5. One purpose for each variable
+6. Use good names
+7. Use whitespace to help the reader
+8. Don’t use global variables
+9. Methods should return results, not print them
+10. Avoid special-case code
+
+> 所有图方便快速的想法都很危险，代码不应图简便，实现逻辑仅仅只是最简单的一步
+{: .prompt-danger } 
+
 
 
 
