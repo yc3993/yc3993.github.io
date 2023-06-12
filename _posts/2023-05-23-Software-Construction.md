@@ -240,8 +240,7 @@ Regression
 > 所有图方便快速的想法都很危险，代码不应图简便，实现逻辑仅仅只是最简单的一步
 {: .prompt-danger } 
 
-
-
-
+## Version Control
+[Pro Git](https://git-scm.com/book/zh/v2)
 
 
