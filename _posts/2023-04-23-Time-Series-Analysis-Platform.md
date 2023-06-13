@@ -107,7 +107,7 @@ def predict(
 
 
 #### Merlion Model  
-[Salesforce Merlion](https://github.com/salesforce/Merlion)
+
 
 ## Architecture
 ![Architecture](../../pic/tsa/tsa_new_.pic.jpg){: .light .w-75 .shadow .rounded-10 w='1212' h='668' }
