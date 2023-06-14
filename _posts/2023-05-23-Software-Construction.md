@@ -244,5 +244,59 @@ Regression
 [Pro Git](https://git-scm.com/book/zh/v2)
 
 ## Specifications(技术规范)
+#### Javadoc
+之前已经对于注解的格式有了一定的说明，但是还是有些地方有所不足。  
+ex:
+```java
+static int find(int[] arr, int val) {
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] == val) return i;
+    }
+    return -1;
+}
 
+static int find(int[] arr, int val) {
+    for (int i = 0, j = arr.length-1; i <= j; i++, j--) {
+        if (arr[i] == val) return i;
+        if (arr[j] == val) return j;
+    }
+    return -1;
+}
+```
+前置条件
+: 两段代码想要完成的目标是一样的但是由于数组中可能出现多个相同的val，导致有可能结果一前一后。  
+应改为: 
 
+```java
+static int find(int[] arr, int val)
+  requires: val occurs exactly once in arr
+  effects : returns index i such that arr[i] = val
+```
+
+<h4>Specification(method and class)</h4>
+ - a method signature, giving the name, parameter types, return type, and exceptions thrown
+ - a requires clause, describing additional restrictions on the parameters
+ - an effects clause, describing the return value, exceptions, and other effects of the method
+
+```java
+/**
+ * Find a value in an array.
+ * @param arr array to search, requires that val occurs exactly once
+ *            in arr
+ * @param val value to search for
+ * @return index i such that arr[i] = val
+ */
+static int find(int[] arr, int val)
+```
+> 先决条件和后置影响
+{: .prompt-tip } 
+
+#### 规范涵盖内容
+- 参数和返回值
+- 不应该谈论局部变量或方法类的私有字段
+
+#### 测试规范
+- 不要做超出规范的假设
+- 一个好的单元测试仅关注单个规范
+
+#### Exceptions
