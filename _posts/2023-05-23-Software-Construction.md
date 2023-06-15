@@ -288,7 +288,7 @@ static int find(int[] arr, int val)
  */
 static int find(int[] arr, int val)
 ```
-> 先决条件和后置影响
+> method任务介绍，@param：先决条件，@return：后置影响
 {: .prompt-tip } 
 
 #### 规范涵盖内容
@@ -300,3 +300,5 @@ static int find(int[] arr, int val)
 - 一个好的单元测试仅关注单个规范
 
 #### Exceptions
+
+## Designing Specifications
