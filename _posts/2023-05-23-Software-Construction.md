@@ -302,3 +302,29 @@ static int find(int[] arr, int val)
 #### Exceptions
 
 ## Designing Specifications
+优秀的规范标准:
+- coherent
+: 一个spec只应该完成连贯的事情，具有原子性（这点没太理解）
+
+- informative
+: 返回值应具有意义，一面的例子返回值如果是空不能判断字典中指定元素是不存在还是本来就是空
+```java
+static V put(Map<K,V> map, K key, V val)
+requires:
+val may be null, and map may contain null values
+effects:
+inserts (key, val) into the mapping, overriding any existing mapping for key, and returns old value for key, unless none, in which case it returns null
+```
+- strong
+: 对编码者足够有力的保证
+
+- weak
+: 对使用者要有一定的宽松选择
+
+- abstract
+: 返回值尽量使用抽象类型，如List而非ArrayList
+```java
+static ArrayList<T> reverse(ArrayList<T> list)
+  effects: returns a new list which is the reversal of list,
+           i.e. newList[i] = list[n-i-1] for all 0 ≤ i < n, where n = list.size()
+```
