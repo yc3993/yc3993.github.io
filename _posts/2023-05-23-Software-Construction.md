@@ -328,3 +328,30 @@ static ArrayList<T> reverse(ArrayList<T> list)
   effects: returns a new list which is the reversal of list,
            i.e. newList[i] = list[n-i-1] for all 0 ≤ i < n, where n = list.size()
 ```
+
+## Mutability & Immutability
+1. 可变类型相对于不可变类型大部分情况下可以节约资源（减少复制次数）
+2. 可变类型会增加错误风险
+
+## Avoiding Debugging
+#### Make bugs impossible
+多使用不可变量，如final，string这些变量维护代码安全性
+
+#### Localize bugs
+对于方法的前提条件可以加exception
+```java
+/**
+ * @param x  requires x >= 0
+ * @return approximation to square root of x
+ */
+public double sqrt(double x) { 
+    if (! (x >= 0)) throw new IllegalArgumentException("required x >= 0, but was: " + x);
+    ...
+}
+```
+
+#### Modularity & encapsulation
+1. 模块化
+: 不同模块之前隔离开来，debug的时候可以更快找到问题
+2. 封装
+: 模块负责自身的内部行为，并且系统其他部分中的错误不会破坏其完整性。将变量范围控制在class或者method内。
