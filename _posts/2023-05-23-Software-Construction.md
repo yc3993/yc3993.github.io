@@ -375,3 +375,63 @@ public double sqrt(double x) {
 当递归深度较大时，会产生大量的函数调用帧堆积在内存中，导致内存消耗增加。如果递归深度超过系统或编程语言的栈大小限制，就会发生栈溢出错误。
 
 所以多数情况可以考虑动态规划解决递归的内存消耗问题。
+
+## Equality
+#### 不可变量等价关系
+```java
+public class Duration {
+    ...   
+    // Problematic definition of equals()
+    public boolean equals(Duration that) {
+        return this.getLength() == that.getLength();        
+    }
+}
+```
+> 错误原因：没有override，引用新对象时会导致使用原equals方法 
+
+**正确做法**
+
+```java
+@Override
+public boolean equals(Object that) {
+    return that instanceof Duration && this.sameValue((Duration)that);
+}
+
+// returns true iff this and that represent the same abstract value
+private boolean sameValue(Duration that) {
+    return this.getLength() == that.getLength();
+}
+```
+> instanceof
+: 用来测试一个实例是否属于特定的类型
+
+**Java String Example:**
+```java
+public boolean equals(Object anObject) {
+        if (this == anObject) {
+            return true;
+        }
+        return (anObject instanceof String aString)
+                && (!COMPACT_STRINGS || this.coder == aString.coder)
+                && StringLatin1.equals(value, aString.value);
+}
+```
+
+#### 可变类型相等
+直接比较会出现问题，Set中含有List，修改List会使得HashCode不相同
+```java
+public void WhyObservationalEqualityHurts() {
+        List<String> list = new ArrayList<>();
+        list.add("a");
+        Set<List<String>> set = new HashSet<List<String>>();
+        set.add(list);
+        System.out.println("set.contains(list)=" + set.contains(list));
+        list.add("goodbye");
+        System.out.println("set: " + set);
+        System.out.println("set.contains(list)=" + set.contains(list));
+// set.contains(list)=true
+// set: [[a, goodbye]]
+// set.contains(list)=false
+    }
+```
+所以可变类型equal一般基于引用比较
