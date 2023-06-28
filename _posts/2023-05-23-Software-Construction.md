@@ -191,6 +191,9 @@ Automated
 Regression
 : 修复错误后，把错误样例输入自动化测试中。因为该错误可能很容易再犯
 
+#### Tips
+1. assertNotNull谨慎使用，有可能是empty
+
 #### Summary
 1. Test-first programming
 : 最重要的思想！！！
@@ -435,3 +438,81 @@ public void WhyObservationalEqualityHurts() {
     }
 ```
 所以可变类型equal一般基于引用比较
+
+## Java Streaming
+#### Streaming优点
+- 减少中间变量temp
+- 迭代器思想，处理过的数据不消耗内存
+- 并行运算
+
+#### Example
+```java
+package words;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
+
+/**
+ * Words example: Java implementation with map/filter/reduce.
+ */
+public class Words2 {
+    
+    /**
+     * Find all files in the filesystem subtree rooted at folder.
+     * @param folder root of subtree, requires folder.isDirectory() == true
+     * @return stream of all ordinary files (not folders) that have folder as
+     *         their ancestor
+     */
+    static Stream<File> allFilesIn(File folder) {
+        File[] children = folder.listFiles();
+        Stream<File> descendants = Arrays.stream(children)
+                                         .filter(File::isDirectory)
+                                         .flatMap(Words2::allFilesIn);
+        return Stream.concat(descendants,
+                             Arrays.stream(children).filter(File::isFile));
+    }
+    
+    /**
+     * Make a filename suffix testing predicate.
+     * @param suffix string to test
+     * @return a predicate that returns true iff the filename ends with suffix.
+     */
+    static Predicate<File> endsWith(String suffix) {
+        return f -> f.getPath().endsWith(suffix);
+    }
+    
+    /**
+     * Print the words in Java files in the project.
+     * @param args unused
+     * @throws IOException if error while reading files or folders
+     */
+    public static void main(String[] args) throws IOException {
+        Stream<File> files = allFilesIn(new File("."))
+                              .filter(endsWith(".java"));
+        Stream<Path> paths = files.map(File::toPath);
+        Stream<List<String>> fileContents = paths.map(path -> {
+            try {
+                return Files.readAllLines(path);
+            } catch (IOException ioe) {
+                throw new UncheckedIOException(ioe);
+            }
+        });
+        Stream<String> lines = fileContents.flatMap(List::stream);
+        Stream<String> words = lines.flatMap(line -> Arrays.stream(line.split("\\W+"))
+                                                     .filter(s -> s.length() > 0));
+        words.forEach(System.out::println);
+    }
+}
+```
+
+#### 并行操作
+```Stream<Path> paths = files.map(File::toPath);```  
+map操作可以并行运算   
+```Stream<Path> paths = files.parallel().map(File::toPath);```
