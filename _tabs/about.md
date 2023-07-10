@@ -6,6 +6,7 @@ order: 4
 Important notes:
  - running command: bundle exec jekyll s
  - home brew install: export HOMEBREW_NO_INSTALL_FROM_API=1
+ - security test: com.icbc.ndf
 
 Timeout for Github connections:
 1. ping github.com: timeout
